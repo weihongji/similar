@@ -141,10 +141,13 @@ namespace Similar
 			int len2 = s2.Length;
 			int lenMin = Math.Min(len1, len2);
 			int index = -1;
+			bool checkCase = chkCase.Checked;
 			for (int i = 0; i < lenMin; i++) {
 				if (s1[i] != s2[i]) {
-					index = i;
-					break;
+					if (checkCase || Char.ToLower(s1[i]) != Char.ToLower(s2[i])) {
+						index = i;
+						break;
+					}
 				}
 			}
 			if (index < 0 && len1 != len2) {
