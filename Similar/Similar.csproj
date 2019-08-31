@@ -66,12 +66,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ScintillaForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ScintillaForm.Designer.cs">
-      <DependentUpon>ScintillaForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="SimilarForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,9 +74,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ScintillaForm.resx">
-      <DependentUpon>ScintillaForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SimilarForm.resx">
       <DependentUpon>SimilarForm.cs</DependentUpon>
     </EmbeddedResource>
