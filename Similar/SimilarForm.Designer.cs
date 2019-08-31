@@ -49,9 +49,9 @@
 			this.panelText = new System.Windows.Forms.Panel();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.btnUp = new System.Windows.Forms.Button();
-			this.txtUp = new System.Windows.Forms.TextBox();
+			this.txtUp = new ScintillaNET.Scintilla();
 			this.btnDown = new System.Windows.Forms.Button();
-			this.txtDown = new System.Windows.Forms.TextBox();
+			this.txtDown = new ScintillaNET.Scintilla();
 			this.panelTop.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			this.panelButtons.SuspendLayout();
@@ -67,15 +67,15 @@
 			this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panelTop.Location = new System.Drawing.Point(0, 0);
 			this.panelTop.Name = "panelTop";
-			this.panelTop.Size = new System.Drawing.Size(664, 32);
+			this.panelTop.Size = new System.Drawing.Size(664, 35);
 			this.panelTop.TabIndex = 0;
 			// 
 			// labelDescription
 			// 
 			this.labelDescription.AutoSize = true;
-			this.labelDescription.Location = new System.Drawing.Point(3, 9);
+			this.labelDescription.Location = new System.Drawing.Point(3, 10);
 			this.labelDescription.Name = "labelDescription";
-			this.labelDescription.Size = new System.Drawing.Size(287, 12);
+			this.labelDescription.Size = new System.Drawing.Size(240, 13);
 			this.labelDescription.TabIndex = 0;
 			this.labelDescription.Text = "Compare two text blocks and show the difference";
 			// 
@@ -90,7 +90,7 @@
             this.statusChar,
             this.statusCodeLabel,
             this.statusCode});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 120);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 135);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(664, 26);
 			this.statusStrip1.TabIndex = 3;
@@ -99,7 +99,7 @@
 			// statusLengthLabel
 			// 
 			this.statusLengthLabel.Name = "statusLengthLabel";
-			this.statusLengthLabel.Size = new System.Drawing.Size(50, 21);
+			this.statusLengthLabel.Size = new System.Drawing.Size(47, 21);
 			this.statusLengthLabel.Text = "Length:";
 			// 
 			// statusLength
@@ -113,7 +113,7 @@
 			// 
 			this.statusPositionLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
 			this.statusPositionLabel.Name = "statusPositionLabel";
-			this.statusPositionLabel.Size = new System.Drawing.Size(80, 21);
+			this.statusPositionLabel.Size = new System.Drawing.Size(73, 21);
 			this.statusPositionLabel.Text = "Position #1:";
 			// 
 			// statusPosition
@@ -127,7 +127,7 @@
 			// 
 			this.statusCharLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
 			this.statusCharLabel.Name = "statusCharLabel";
-			this.statusCharLabel.Size = new System.Drawing.Size(42, 21);
+			this.statusCharLabel.Size = new System.Drawing.Size(39, 21);
 			this.statusCharLabel.Text = "Char:";
 			// 
 			// statusChar
@@ -141,7 +141,7 @@
 			// 
 			this.statusCodeLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
 			this.statusCodeLabel.Name = "statusCodeLabel";
-			this.statusCodeLabel.Size = new System.Drawing.Size(46, 21);
+			this.statusCodeLabel.Size = new System.Drawing.Size(42, 21);
 			this.statusCodeLabel.Text = "ASCII:";
 			// 
 			// statusCode
@@ -156,9 +156,9 @@
 			this.panelButtons.Controls.Add(this.chkCase);
 			this.panelButtons.Controls.Add(this.panelButtonsInner);
 			this.panelButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panelButtons.Location = new System.Drawing.Point(0, 90);
+			this.panelButtons.Location = new System.Drawing.Point(0, 102);
 			this.panelButtons.Name = "panelButtons";
-			this.panelButtons.Size = new System.Drawing.Size(664, 30);
+			this.panelButtons.Size = new System.Drawing.Size(664, 33);
 			this.panelButtons.TabIndex = 2;
 			// 
 			// chkCase
@@ -166,9 +166,9 @@
 			this.chkCase.AutoSize = true;
 			this.chkCase.Checked = true;
 			this.chkCase.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkCase.Location = new System.Drawing.Point(71, 6);
+			this.chkCase.Location = new System.Drawing.Point(71, 7);
 			this.chkCase.Name = "chkCase";
-			this.chkCase.Size = new System.Drawing.Size(108, 16);
+			this.chkCase.Size = new System.Drawing.Size(94, 17);
 			this.chkCase.TabIndex = 0;
 			this.chkCase.TabStop = false;
 			this.chkCase.Text = "&Case sensitive";
@@ -183,7 +183,7 @@
 			this.panelButtonsInner.Dock = System.Windows.Forms.DockStyle.Right;
 			this.panelButtonsInner.Location = new System.Drawing.Point(354, 0);
 			this.panelButtonsInner.Name = "panelButtonsInner";
-			this.panelButtonsInner.Size = new System.Drawing.Size(310, 30);
+			this.panelButtonsInner.Size = new System.Drawing.Size(310, 33);
 			this.panelButtonsInner.TabIndex = 0;
 			// 
 			// btnRestore
@@ -191,7 +191,7 @@
 			this.btnRestore.ContextMenuStrip = this.contextMenuRestore;
 			this.btnRestore.Location = new System.Drawing.Point(236, 2);
 			this.btnRestore.Name = "btnRestore";
-			this.btnRestore.Size = new System.Drawing.Size(64, 25);
+			this.btnRestore.Size = new System.Drawing.Size(64, 27);
 			this.btnRestore.TabIndex = 2;
 			this.btnRestore.TabStop = false;
 			this.btnRestore.Text = "&Restore";
@@ -203,13 +203,13 @@
 			this.contextMenuRestore.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuClean});
 			this.contextMenuRestore.Name = "contextMenuRestore";
-			this.contextMenuRestore.Size = new System.Drawing.Size(109, 26);
+			this.contextMenuRestore.Size = new System.Drawing.Size(105, 26);
 			this.contextMenuRestore.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuRestore_Opening);
 			// 
 			// menuClean
 			// 
 			this.menuClean.Name = "menuClean";
-			this.menuClean.Size = new System.Drawing.Size(108, 22);
+			this.menuClean.Size = new System.Drawing.Size(104, 22);
 			this.menuClean.Text = "&Clean";
 			this.menuClean.Click += new System.EventHandler(this.menuClean_Click);
 			// 
@@ -217,7 +217,7 @@
 			// 
 			this.btnCompress.Location = new System.Drawing.Point(134, 2);
 			this.btnCompress.Name = "btnCompress";
-			this.btnCompress.Size = new System.Drawing.Size(64, 25);
+			this.btnCompress.Size = new System.Drawing.Size(64, 27);
 			this.btnCompress.TabIndex = 1;
 			this.btnCompress.TabStop = false;
 			this.btnCompress.Text = "Com&press";
@@ -228,7 +228,7 @@
 			// 
 			this.btnLocate.Location = new System.Drawing.Point(32, 2);
 			this.btnLocate.Name = "btnLocate";
-			this.btnLocate.Size = new System.Drawing.Size(64, 25);
+			this.btnLocate.Size = new System.Drawing.Size(64, 27);
 			this.btnLocate.TabIndex = 0;
 			this.btnLocate.TabStop = false;
 			this.btnLocate.Text = "&Locate";
@@ -239,9 +239,9 @@
 			// 
 			this.panelText.Controls.Add(this.tableLayoutPanel1);
 			this.panelText.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panelText.Location = new System.Drawing.Point(0, 32);
+			this.panelText.Location = new System.Drawing.Point(0, 35);
 			this.panelText.Name = "panelText";
-			this.panelText.Size = new System.Drawing.Size(664, 58);
+			this.panelText.Size = new System.Drawing.Size(664, 67);
 			this.panelText.TabIndex = 1;
 			// 
 			// tableLayoutPanel1
@@ -259,14 +259,14 @@
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(664, 58);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(664, 67);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// btnUp
 			// 
 			this.btnUp.Location = new System.Drawing.Point(3, 3);
 			this.btnUp.Name = "btnUp";
-			this.btnUp.Size = new System.Drawing.Size(64, 23);
+			this.btnUp.Size = new System.Drawing.Size(64, 25);
 			this.btnUp.TabIndex = 0;
 			this.btnUp.TabStop = false;
 			this.btnUp.Text = "Paste &1";
@@ -275,24 +275,27 @@
 			// 
 			// txtUp
 			// 
+			this.txtUp.AutoCMaxHeight = 9;
 			this.txtUp.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.txtUp.HScrollBar = false;
 			this.txtUp.Location = new System.Drawing.Point(73, 3);
-			this.txtUp.Multiline = true;
 			this.txtUp.Name = "txtUp";
-			this.txtUp.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtUp.Size = new System.Drawing.Size(588, 23);
+			this.txtUp.Size = new System.Drawing.Size(588, 27);
 			this.txtUp.TabIndex = 1;
-			this.txtUp.Click += new System.EventHandler(this.TextBox_Click);
+			this.txtUp.TabWidth = 8;
+			this.txtUp.UseTabs = true;
+			this.txtUp.WrapMode = ScintillaNET.WrapMode.Word;
 			this.txtUp.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+			this.txtUp.Click += new System.EventHandler(this.TextBox_Click);
 			this.txtUp.Enter += new System.EventHandler(this.TextBox_Enter);
 			this.txtUp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			this.txtUp.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyUp);
 			// 
 			// btnDown
 			// 
-			this.btnDown.Location = new System.Drawing.Point(3, 32);
+			this.btnDown.Location = new System.Drawing.Point(3, 36);
 			this.btnDown.Name = "btnDown";
-			this.btnDown.Size = new System.Drawing.Size(64, 23);
+			this.btnDown.Size = new System.Drawing.Size(64, 25);
 			this.btnDown.TabIndex = 2;
 			this.btnDown.TabStop = false;
 			this.btnDown.Text = "Paste &2";
@@ -301,24 +304,27 @@
 			// 
 			// txtDown
 			// 
+			this.txtDown.AutoCMaxHeight = 9;
 			this.txtDown.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txtDown.Location = new System.Drawing.Point(73, 32);
-			this.txtDown.Multiline = true;
+			this.txtDown.HScrollBar = false;
+			this.txtDown.Location = new System.Drawing.Point(73, 36);
 			this.txtDown.Name = "txtDown";
-			this.txtDown.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.txtDown.Size = new System.Drawing.Size(588, 23);
+			this.txtDown.Size = new System.Drawing.Size(588, 28);
 			this.txtDown.TabIndex = 3;
-			this.txtDown.Click += new System.EventHandler(this.TextBox_Click);
+			this.txtDown.TabWidth = 8;
+			this.txtDown.UseTabs = true;
+			this.txtDown.WrapMode = ScintillaNET.WrapMode.Word;
 			this.txtDown.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
+			this.txtDown.Click += new System.EventHandler(this.TextBox_Click);
 			this.txtDown.Enter += new System.EventHandler(this.TextBox_Enter);
 			this.txtDown.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyDown);
 			this.txtDown.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TextBox_KeyUp);
 			// 
 			// SimilarForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(664, 146);
+			this.ClientSize = new System.Drawing.Size(664, 161);
 			this.Controls.Add(this.panelText);
 			this.Controls.Add(this.panelButtons);
 			this.Controls.Add(this.statusStrip1);
@@ -343,7 +349,6 @@
 			this.contextMenuRestore.ResumeLayout(false);
 			this.panelText.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
-			this.tableLayoutPanel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -363,9 +368,9 @@
 		private System.Windows.Forms.Button btnRestore;
 		private System.Windows.Forms.Button btnCompress;
 		private System.Windows.Forms.Button btnLocate;
-		private System.Windows.Forms.TextBox txtUp;
+		private ScintillaNET.Scintilla txtUp;
 		private System.Windows.Forms.Button btnDown;
-		private System.Windows.Forms.TextBox txtDown;
+		private ScintillaNET.Scintilla txtDown;
 		private System.Windows.Forms.ToolStripStatusLabel statusLengthLabel;
 		private System.Windows.Forms.ToolStripStatusLabel statusLength;
 		private System.Windows.Forms.ToolStripStatusLabel statusPositionLabel;

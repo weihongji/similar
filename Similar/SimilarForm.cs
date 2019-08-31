@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ScintillaNET;
 
 namespace Similar
 {
@@ -22,11 +23,15 @@ namespace Similar
 		private readonly int FORM_HEIGHT_MIN = 185;
 		private readonly int AUTO_EXPAND_MAX = 9;
 
+		private readonly int LINE_NUMBER_LENGTH1 = 30;
+		private readonly int LINE_NUMBER_LENGTH2 = 50;
+		private readonly int LINE_NUMBER_LENGTH3 = 70;
+
 		private string text1 = "";
 		private string text2 = "";
 
 		private bool clipboardCleaned = false;
-		private TextBox tbox2Locate = null;
+		private Scintilla tbox2Locate = null;
 
 		public SimilarForm() {
 			InitializeComponent();
@@ -34,6 +39,8 @@ namespace Similar
 
 		#region "Form Events"
 		private void SimilarForm_Load(object sender, EventArgs e) {
+			InitTextBoxes();
+
 			ShowLengthStatus();
 			ShowPositionStatus();
 
@@ -94,9 +101,17 @@ namespace Similar
 		}
 
 		private void TextBox_KeyDown(object sender, KeyEventArgs e) {
-			if (e.KeyCode == Keys.A && e.Control) {
-				SelectAllText((TextBox)sender);
-				e.Handled = e.SuppressKeyPress = true;
+			// Tab pressing is captured by the editor. Let's change the behavior to what normal textboxes work.
+			if (e.KeyCode == Keys.Tab) {
+				if (e.Control) { // Enter a tab when Ctrl+Tab is pressed
+					var tbox = (Scintilla)sender;
+					tbox.ReplaceSelection("\t");
+				}
+				else if (!e.Alt) { // A single Tab pressed (not combined with Ctrl, Alt)
+					e.SuppressKeyPress = true;
+					this.SelectNextControl(ActiveControl, !e.Shift, true, true, true);
+					return;
+				}
 			}
 		}
 
@@ -107,15 +122,16 @@ namespace Similar
 		private void TextBox_TextChanged(object sender, EventArgs e) {
 			ShowLengthStatus();
 			ShowPositionStatus();
+			SetLineNumber();
 		}
 
 		private void TextBox_Click(object sender, EventArgs e) {
-			this.tbox2Locate = (TextBox)sender;
+			this.tbox2Locate = (Scintilla)sender;
 			ShowPositionStatus();
 		}
 
 		private void TextBox_Enter(object sender, EventArgs e) {
-			this.tbox2Locate = (TextBox)sender;
+			this.tbox2Locate = (Scintilla)sender;
 		}
 		#endregion
 
@@ -162,6 +178,7 @@ namespace Similar
 			SelectDifferentChar(tbox, index);
 			ShowPositionStatus();
 			this.tbox2Locate = this.tbox2Locate == txtUp ? txtDown : txtUp;
+			this.tbox2Locate.SetEmptySelection(index);
 		}
 
 		private void btnCompress_Click(object sender, EventArgs e) {
@@ -241,7 +258,7 @@ namespace Similar
 			}
 		}
 
-		private void PasteText(TextBox textbox) {
+		private void PasteText(Scintilla textbox) {
 			textbox.Text = Clipboard.GetText();
 			Clipboard.Clear();
 			if (textbox.Text.Length > 0) {
@@ -250,7 +267,8 @@ namespace Similar
 		}
 
 		private void IncreaseHeight() {
-			int lines = txtUp.Text.Count<char>(x => x == '\n') + 1;
+			int lines = GetLineCount(txtUp); // To be simple, we adjust textbox height only according to content in Up and the adjustment only happens when Paste text.
+			// We dont' want to consider content in the Down text box and don't want the adjustment to happen whenever content is changed.
 			int requiredLines = Math.Min(lines, AUTO_EXPAND_MAX);
 			int requiredHeight = FORM_HEIGHT_MIN + (requiredLines - 1) * 30;
 			if (this.Height < requiredHeight) {
@@ -258,14 +276,14 @@ namespace Similar
 			}
 		}
 
-		private void SelectAllText(TextBox tbox) {
-			tbox.SelectAll();
+		private int GetLineCount(Scintilla textbox) {
+			return textbox.Lines.Count;
 		}
 
-		private TextBox GetActiveTextBox(bool forceOne = true) {
-			TextBox tbox = null;
-			if (this.ActiveControl != null && this.ActiveControl.GetType() == typeof(TextBox)) {
-				tbox = (TextBox)this.ActiveControl;
+		private Scintilla GetActiveTextBox(bool forceOne = true) {
+			Scintilla tbox = null;
+			if (this.ActiveControl != null && this.ActiveControl.GetType() == typeof(Scintilla)) {
+				tbox = (Scintilla)this.ActiveControl;
 			}
 			if (tbox == null && forceOne) {
 				tbox = txtUp;
@@ -324,7 +342,7 @@ namespace Similar
 			var index = tbox.SelectionStart;
 			var length = tbox.Text.Length;
 			if (length > 0) {
-				if (tbox.SelectionLength > 0) {
+				if (tbox.SelectedText.Length > 0) {
 					index++;
 				}
 				statusPosition.Text = String.Format("{0} / {1}", FormatNumber(index), tbox.Text.Length);
@@ -363,13 +381,14 @@ namespace Similar
 			statusCode.Text = String.Format("{0} (x{1})", code, hex.PadLeft(2, '0'));
 		}
 
-		private void SelectDifferentChar(TextBox tbox, int index) {
+		private void SelectDifferentChar(Scintilla tbox, int index) {
 			tbox.Focus();
 			if (index < tbox.Text.Length) {
-				tbox.Select(index, 1);
+				tbox.SelectionStart = index;
+				tbox.SelectionEnd = index + 1;
 			}
 			else {
-				tbox.Select(index, 0);
+				tbox.SetEmptySelection(index);
 			}
 			ShowCharStatus(tbox.SelectedText);
 		}
@@ -377,5 +396,59 @@ namespace Similar
 		private string FormatNumber(int n) {
 			return n.ToString("#,0");
 		}
+
+		private void InitTextBoxes() {
+			SetextBoxStyle(txtUp);
+			SetextBoxStyle(txtDown);
+			SetLineNumber();
+		}
+
+		private void SetextBoxStyle(Scintilla tbox) {
+			tbox.Styles[Style.Default].Font = "Microsoft Sans Serif";
+			tbox.Styles[Style.Default].Size = (int)Math.Floor(this.Font.Size + 1);
+			tbox.SetSelectionBackColor(true, IntToColor(0x0078D7));
+		}
+
+		private void SetLineNumber() {
+			int lines = Math.Max(GetLineCount(txtUp), GetLineCount(txtDown));
+			int width;
+			if (lines <= 1) {
+				width = 0;
+			}
+			else if (lines > 1 && lines < 1000) {
+				width = LINE_NUMBER_LENGTH1;
+			}
+			else if (lines >= 1000 && lines < 1000000) {
+				width = LINE_NUMBER_LENGTH2;
+			}
+			else {
+				width = LINE_NUMBER_LENGTH3;
+			}
+
+			SetLineNumber(txtUp, width);
+			SetLineNumber(txtDown, width);
+		}
+
+		private void SetLineNumber(Scintilla tbox, int width) {
+			var nums = tbox.Margins[1];
+			if (nums.Width == width) {
+				return;
+			}
+			else if (nums.Width == LINE_NUMBER_LENGTH1 && width == 0) { // Not necessary to hide the line number area if it's not too wide.
+				return;
+			}
+			nums.Width = width;
+			nums.Type = MarginType.Number;
+			nums.Sensitive = true;
+			nums.Mask = 0;
+
+			var margin = tbox.Margins[2];
+			margin.Width = width > 0 ? 5 : 0;
+		}
+
+		public static Color IntToColor(int rgb) {
+			return Color.FromArgb(255, (byte)(rgb >> 16), (byte)(rgb >> 8), (byte)rgb);
+		}
+
 	}
 }
