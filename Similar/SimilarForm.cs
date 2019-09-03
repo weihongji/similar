@@ -318,10 +318,10 @@ namespace Similar
 			// Status bar
 			var lengthText = "";
 			if (same) {
-				lengthText = String.Format("{0} - Identical", FormatNumber(s1.Length));
+				lengthText = String.Format("{0} (Identical)", FormatNumber(s1.Length));
 			}
 			else if (s1.Length == s2.Length) {
-				lengthText = String.Format("{0} - Different", FormatNumber(s1.Length));
+				lengthText = String.Format("({0})", FormatNumber(s1.Length));
 			}
 			else {
 				lengthText = String.Format("{0} {2} {1}", FormatNumber(s1.Length), FormatNumber(s2.Length), s1.Length > s2.Length ? ">" : "<");
