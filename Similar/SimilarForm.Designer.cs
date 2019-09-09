@@ -146,9 +146,8 @@
 			// 
 			// statusCode
 			// 
-			this.statusCode.AutoSize = false;
 			this.statusCode.Name = "statusCode";
-			this.statusCode.Size = new System.Drawing.Size(60, 21);
+			this.statusCode.Size = new System.Drawing.Size(0, 21);
 			this.statusCode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// panelButtons
@@ -331,6 +330,7 @@
 			this.Controls.Add(this.panelTop);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.KeyPreview = true;
+			this.MinimumSize = new System.Drawing.Size(680, 200);
 			this.Name = "SimilarForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Similar";
